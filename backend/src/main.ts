@@ -48,6 +48,15 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
+  // Prevent noisy 404 logs when browsers request /favicon.ico
+  app.use((req, res, next) => {
+    if (req.originalUrl === '/favicon.ico') {
+      res.status(204).end();
+      return;
+    }
+    next();
+  });
+
   // API Documentation (Swagger)
   const config = new DocumentBuilder()
     .setTitle('CYP Election API')

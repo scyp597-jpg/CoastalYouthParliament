@@ -40,6 +40,13 @@ async function bootstrap() {
         methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     });
+    app.use((req, res, next) => {
+        if (req.originalUrl === '/favicon.ico') {
+            res.status(204).end();
+            return;
+        }
+        next();
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('CYP Election API')
         .setDescription('Coastal Youth Parliament Election System API')

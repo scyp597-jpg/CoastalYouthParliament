@@ -40,21 +40,21 @@ const adapter = new adapter_pg_1.PrismaPg({ connectionString: process.env.DATABA
 const prisma = new client_1.PrismaClient({ adapter });
 async function main() {
     console.log('Seeding database...');
-    const adminEmail = 'admin@jkp.org';
+    const adminEmail = 'dullacyp@gmail.com';
     const existingAdmin = await prisma.user.findUnique({
         where: { email: adminEmail },
     });
     if (!existingAdmin) {
-        const passwordHash = await bcrypt.hash('password123', 10);
+        const passwordHash = await bcrypt.hash('cyp@123', 10);
         await prisma.user.create({
             data: {
                 email: adminEmail,
-                name: 'JKP Administrator',
+                name: 'CYP Administrator',
                 passwordHash,
                 role: 'ADMIN',
             },
         });
-        console.log('Admin user seeded (admin@jkp.org / password123)');
+        console.log('Admin user seeded (dullacyp@gmail.com / cyp@123)');
     }
     else {
         console.log('Admin user already exists');

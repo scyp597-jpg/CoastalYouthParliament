@@ -2,6 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const config_1 = require("prisma/config");
+const databaseUrl = process.env.DATABASE_URL?.trim();
+if (!databaseUrl) {
+    throw new Error("DATABASE_URL is missing. Set it in backend/.env before running Prisma commands.");
+}
+const protocol = new URL(databaseUrl).protocol;
+if (!protocol.startsWith("postgres")) {
+    throw new Error(`DATABASE_URL must use a PostgreSQL connection string. Received: ${databaseUrl}`);
+}
 exports.default = (0, config_1.defineConfig)({
     schema: "prisma/schema.prisma",
     migrations: {
@@ -9,7 +17,7 @@ exports.default = (0, config_1.defineConfig)({
         seed: "npx ts-node ./prisma/seed.ts",
     },
     datasource: {
-        url: process.env["DATABASE_URL"],
+        url: databaseUrl,
     },
 });
 //# sourceMappingURL=prisma.config.js.map
