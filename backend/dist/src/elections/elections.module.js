@@ -14,25 +14,24 @@ const elections_controller_1 = require("./elections.controller");
 const election_orchestrator_service_1 = require("./election-orchestrator.service");
 const election_orchestrator_controller_1 = require("./election-orchestrator.controller");
 const prisma_module_1 = require("../prisma.module");
-const results_gateway_1 = require("../results/results.gateway");
+const results_module_1 = require("../results/results.module");
 const election_scheduler_service_1 = require("../common/tasks/election-scheduler.service");
 let ElectionsModule = class ElectionsModule {
 };
 exports.ElectionsModule = ElectionsModule;
 exports.ElectionsModule = ElectionsModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, schedule_1.ScheduleModule.forRoot()],
+        imports: [prisma_module_1.PrismaModule, schedule_1.ScheduleModule.forRoot(), results_module_1.ResultsModule],
         controllers: [elections_controller_1.ElectionsController, election_orchestrator_controller_1.ElectionOrchestratorController],
         providers: [
             elections_service_1.ElectionsService,
             election_orchestrator_service_1.ElectionOrchestratorService,
-            results_gateway_1.ResultsGateway,
             election_scheduler_service_1.ElectionSchedulerService,
         ],
         exports: [
             elections_service_1.ElectionsService,
             election_orchestrator_service_1.ElectionOrchestratorService,
-            results_gateway_1.ResultsGateway,
+            results_module_1.ResultsModule,
         ],
     })
 ], ElectionsModule);

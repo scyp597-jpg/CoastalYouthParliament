@@ -6,20 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminModule = void 0;
+exports.ResultsModule = void 0;
 const common_1 = require("@nestjs/common");
-const admin_controller_1 = require("./admin.controller");
-const admin_service_1 = require("./admin.service");
-const results_module_1 = require("../results/results.module");
-let AdminModule = class AdminModule {
+const jwt_1 = require("@nestjs/jwt");
+const results_gateway_1 = require("./results.gateway");
+let ResultsModule = class ResultsModule {
 };
-exports.AdminModule = AdminModule;
-exports.AdminModule = AdminModule = __decorate([
+exports.ResultsModule = ResultsModule;
+exports.ResultsModule = ResultsModule = __decorate([
     (0, common_1.Module)({
-        imports: [results_module_1.ResultsModule],
-        controllers: [admin_controller_1.AdminController],
-        providers: [admin_service_1.AdminService],
-        exports: [results_module_1.ResultsModule],
+        imports: [
+            jwt_1.JwtModule.register({
+                secret: process.env.JWT_SECRET || 'jkp_secret_key_2026',
+                signOptions: { expiresIn: '1d' },
+            }),
+        ],
+        providers: [results_gateway_1.ResultsGateway],
+        exports: [results_gateway_1.ResultsGateway],
     })
-], AdminModule);
-//# sourceMappingURL=admin.module.js.map
+], ResultsModule);
+//# sourceMappingURL=results.module.js.map

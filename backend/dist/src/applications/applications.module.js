@@ -12,12 +12,13 @@ const applications_service_1 = require("./applications.service");
 const applications_controller_1 = require("./applications.controller");
 const prisma_module_1 = require("../prisma.module");
 const elections_module_1 = require("../elections/elections.module");
+const results_module_1 = require("../results/results.module");
 let ApplicationsModule = class ApplicationsModule {
 };
 exports.ApplicationsModule = ApplicationsModule;
 exports.ApplicationsModule = ApplicationsModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, elections_module_1.ElectionsModule],
+        imports: [prisma_module_1.PrismaModule, elections_module_1.ElectionsModule, results_module_1.ResultsModule],
         controllers: [applications_controller_1.ApplicationsController],
         providers: [applications_service_1.ApplicationsService],
         exports: [applications_service_1.ApplicationsService],
