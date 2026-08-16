@@ -9,6 +9,13 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL is missing. Set it in backend/.env before running Prisma commands.");
 }
 
+const protocol = new URL(databaseUrl).protocol;
+if (!protocol.startsWith("postgres")) {
+  throw new Error(
+    `DATABASE_URL must use a PostgreSQL connection string. Received: ${databaseUrl}`,
+  );
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
