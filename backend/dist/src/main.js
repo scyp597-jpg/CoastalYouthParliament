@@ -30,8 +30,12 @@ async function bootstrap() {
         transform: true,
         forbidUnknownValues: true,
     }));
+    const allowedOrigins = (process.env.FRONTEND_URL ?? 'http://localhost:3000,http://localhost:5173')
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter(Boolean);
     app.enableCors({
-        origin: process.env.FRONTEND_URL?.split(',') || ['http://localhost:3001', 'http://localhost:3000'],
+        origin: allowedOrigins,
         credentials: true,
         methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
@@ -44,7 +48,7 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api/docs', app, document);
-    const port = process.env.PORT ?? 3000;
+    const port = process.env.PORT ?? 3001;
     await app.listen(port);
     logger.log(`Application is running on: http://localhost:${port}`);
     logger.log(`API Documentation: http://localhost:${port}/api/docs`);

@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService, TypeOrmHealthIndicator, MemoryHealthIndicator, DiskHealthIndicator } from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService, MemoryHealthIndicator, DiskHealthIndicator } from '@nestjs/terminus';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('health')
@@ -15,13 +15,15 @@ export class HealthController {
   @HealthCheck()
   @ApiOperation({ summary: 'Health check endpoint for monitoring' })
   check() {
+    const diskPath = process.platform === 'win32' ? 'C:\\' : '/';
+
     return this.health.check([
       // Check if heap memory is under 150MB
       () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
       // Check if RSS memory is under 150MB
       () => this.memory.checkRSS('memory_rss', 150 * 1024 * 1024),
       // Check if disk has at least 1GB free
-      () => this.disk.checkStorage('disk', { thresholdPercent: 0.9, path: '/' }),
+      () => this.disk.checkStorage('disk', { thresholdPercent: 0.9, path: diskPath }),
     ]);
   }
 

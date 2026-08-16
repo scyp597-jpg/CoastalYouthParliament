@@ -1,11 +1,11 @@
-// Prisma schema for JKP platform (SQLite database)
+// Prisma schema for CYP platform (PostgreSQL database on Supabase)
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {

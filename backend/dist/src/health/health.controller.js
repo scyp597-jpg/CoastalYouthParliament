@@ -23,10 +23,11 @@ let HealthController = class HealthController {
         this.disk = disk;
     }
     check() {
+        const diskPath = process.platform === 'win32' ? 'C:\\' : '/';
         return this.health.check([
             () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
             () => this.memory.checkRSS('memory_rss', 150 * 1024 * 1024),
-            () => this.disk.checkStorage('disk', { thresholdPercent: 0.9, path: '/' }),
+            () => this.disk.checkStorage('disk', { thresholdPercent: 0.9, path: diskPath }),
         ]);
     }
     liveness() {
