@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const config_1 = require("prisma/config");
-const databaseUrl = process.env.DATABASE_URL?.trim();
+const database_url_1 = require("./src/database-url");
+const databaseUrl = (0, database_url_1.normalizeDatabaseUrl)(process.env.DATABASE_URL);
 if (!databaseUrl) {
     throw new Error("DATABASE_URL is missing. Set it in backend/.env before running Prisma commands.");
 }

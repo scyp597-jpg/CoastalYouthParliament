@@ -2,8 +2,9 @@
 // npm install --save-dev prisma dotenv
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
+import { normalizeDatabaseUrl } from "./src/database-url";
 
-const databaseUrl = process.env.DATABASE_URL?.trim();
+const databaseUrl = normalizeDatabaseUrl(process.env.DATABASE_URL);
 
 if (!databaseUrl) {
   throw new Error("DATABASE_URL is missing. Set it in backend/.env before running Prisma commands.");
